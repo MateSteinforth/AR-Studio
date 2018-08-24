@@ -9,10 +9,10 @@ var Diagnostics = require('Diagnostics');
 // eg get the normal of plane0
 //
 var plane = Scene.root.find('plane0'); 
-var mynormal = getNormal(plane);
-Diagnostics.watch("mynormal.x", mynormal.x);
-Diagnostics.watch("mynormal.y", mynormal.y);
-Diagnostics.watch("mynormal.z", mynormal.z);
+plane.normal = getNormal(plane);
+Diagnostics.watch("mynormal.x", plane.normal.x);
+Diagnostics.watch("mynormal.y", plane.normal.y);
+Diagnostics.watch("mynormal.z", plane.normal.z);
 
 
 // get normal
