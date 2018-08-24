@@ -25,6 +25,7 @@ var Roll = plane.transform.rotationZ;
 var hv_x = Reactive.cos(Pitch).mul(Reactive.cos(Roll)).mul(Reactive.sin(Yaw)).add(Reactive.sin(Pitch).mul(Reactive.sin(Roll)));
 var hv_y = Reactive.cos(Roll).neg().mul(Reactive.sin(Pitch)).add(Reactive.cos(Pitch).mul(Reactive.sin(Yaw)).mul(Reactive.sin(Roll)));
 var hv_z = Reactive.cos(Pitch).mul(Reactive.cos(Yaw));
-var normal = Reactive.vector(hv_x, hv_y, hv_z).neg();
+
+var normal = Reactive.vector(hv_x, hv_y, hv_z);
 
 Diagnostics.log(normal);
