@@ -23,6 +23,7 @@ Diagnostics.watch("mynormal.z", plane.normal.z);
 // Pitch = Up/Down
 // Yaw = left/right
 // Roll = tilt head side/side
+// ZYX rotation order as per FB docs
 //
 function getNormal(object) {
 	var Pitch = object.transform.rotationX;
