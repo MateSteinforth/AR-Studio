@@ -1,14 +1,6 @@
 //
 // get the normal vector of an object
 //
-// How to convert Euler angles to directional vector?
-// https://stackoverflow.com/questions/1568568/how-to-convert-euler-angles-to-directional-vector
-//
-// Rotation in Radians = 0 to pi (3.14)
-// Pitch = Up/Down
-// Yaw = left/right
-// Roll = tilt head side/side
-//
 var Scene = require('Scene');
 var Reactive = require('Reactive');
 var Diagnostics = require('Diagnostics');
@@ -24,6 +16,15 @@ Diagnostics.watch("mynormal.z", mynormal.z);
 
 
 // get normal
+//
+// How to convert Euler angles to directional vector?
+// https://stackoverflow.com/questions/1568568/how-to-convert-euler-angles-to-directional-vector
+//
+// Rotation in Radians = 0 to pi (3.14)
+// Pitch = Up/Down
+// Yaw = left/right
+// Roll = tilt head side/side
+//
 function getNormal(object) {
 	var Pitch = object.transform.rotationX;
 	var Yaw = object.transform.rotationY;
