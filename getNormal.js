@@ -15,7 +15,6 @@ Diagnostics.watch("mynormal.y", plane.normal.y);
 Diagnostics.watch("mynormal.z", plane.normal.z);
 
 
-// get normal
 //
 // How to convert Euler angles to directional vector?
 // https://stackoverflow.com/questions/1568568/how-to-convert-euler-angles-to-directional-vector
