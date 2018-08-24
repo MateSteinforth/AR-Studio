@@ -17,15 +17,21 @@ var Diagnostics = require('Diagnostics');
 // eg get the normal of plane0
 //
 var plane = Scene.root.find('plane0'); 
+var mynormal = getNormal(plane);
+Diagnostics.watch("mynormal.x", mynormal.x);
+Diagnostics.watch("mynormal.y", mynormal.y);
+Diagnostics.watch("mynormal.z", mynormal.z);
 
-var Pitch = plane.transform.rotationX;
-var Yaw = plane.transform.rotationY;
-var Roll = plane.transform.rotationZ;
 
-var hv_x = Reactive.cos(Pitch).mul(Reactive.cos(Roll)).mul(Reactive.sin(Yaw)).add(Reactive.sin(Pitch).mul(Reactive.sin(Roll)));
-var hv_y = Reactive.cos(Roll).neg().mul(Reactive.sin(Pitch)).add(Reactive.cos(Pitch).mul(Reactive.sin(Yaw)).mul(Reactive.sin(Roll)));
-var hv_z = Reactive.cos(Pitch).mul(Reactive.cos(Yaw));
+// get normal
+function getNormal(object) {
+	var Pitch = object.transform.rotationX;
+	var Yaw = object.transform.rotationY;
+	var Roll = object.transform.rotationZ;
+    
+	var hv_x = Reactive.cos(Pitch).mul(Reactive.cos(Roll)).mul(Reactive.sin(Yaw)).add(Reactive.sin(Pitch).mul(Reactive.sin(Roll)));
+	var hv_y = Reactive.cos(Roll).neg().mul(Reactive.sin(Pitch)).add(Reactive.cos(Pitch).mul(Reactive.sin(Yaw)).mul(Reactive.sin(Roll)));
+	var hv_z = Reactive.cos(Pitch).mul(Reactive.cos(Yaw));
 
-var normal = Reactive.vector(hv_x, hv_y, hv_z);
-
-Diagnostics.log(normal);
+  return Reactive.vector(hv_x, hv_y, hv_z);
+}
