@@ -1,3 +1,3 @@
-function x_intercept(L0, L1) { // point signal, ignores z
-  return L0.x.sub(L0.y.mul(L1.x.sub(L0.x)).div(L1.y.sub(L0.y))); // scalar signal
+function intercept(L0, L1, y) { // point signal, ignores z
+  return y.sub(L0.y).div((L1.y.sub(L0.y)).div(L1.x.sub(L0.x))).add(L0.x) ; 
 }
