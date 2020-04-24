@@ -16,6 +16,7 @@ Promise.all([
 
 //
 // short version
+// Scene seems to be built in, it works without assigning it to a const...?
 //
 //const P = require('Patches');
 //Promise.all([Scene.root.findFirst('nullObject0'),]).then(function(results){const nullObject0 = results[0];P.inputs.setPoint("nullObject0_position", nullObject0.transform.position);})
