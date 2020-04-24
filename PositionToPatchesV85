@@ -12,3 +12,10 @@ Promise.all([
 	const nullObject0 = results[0];
 	Patches.inputs.setPoint("nullObject0_position", nullObject0.transform.position);
 })
+
+
+//
+// short version
+//
+//const P = require('Patches');
+//Promise.all([Scene.root.findFirst('nullObject0'),]).then(function(results){const nullObject0 = results[0];P.inputs.setPoint("nullObject0_position", nullObject0.transform.position);})
