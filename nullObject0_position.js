@@ -11,8 +11,9 @@ Promise.all([
    ]).then(function(results){
 	const nullObject0 = results[0];
 	Patches.inputs.setPoint("nullObject0_position", nullObject0.transform.position);
+	// to get world position, thx https://rbkavin.in/
+	// Patches.inputs.setPoint("nullObject0_worldPosition", nullObject0.worldTransform.position);
 })
-
 
 //
 // short version
