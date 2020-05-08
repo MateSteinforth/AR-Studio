@@ -1,5 +1,6 @@
 //
 // debug something with default 2D text
+// dont forget to click 'To Script' and connect the arrow with the value in your patches
 //
 const Patches = require('Patches');
 const Reactive = require('Reactive');
