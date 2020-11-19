@@ -32,6 +32,7 @@ sfwPNG24(saveFile);
 
 }
 
+
 function sfwPNG24(saveFile){
 
 var pngOpts = new PNGSaveOptions;
