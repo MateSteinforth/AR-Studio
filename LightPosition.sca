@@ -1,0 +1,3 @@
+#import <lights>
+std::Light L1 = std::getLight0();
+vec4 Lposition = L1.position;
