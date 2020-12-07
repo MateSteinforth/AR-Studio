@@ -1,0 +1,76 @@
+#import <lights>
+
+struct PhongMaterialParameters {
+  vec3 emission;
+  vec3 ambientFactor;
+  vec3 diffuseFactor;
+  vec3 specularFactor;
+  float shininess;
+  float occlusion;
+};
+
+vec3 applyPhong(
+    std::LightData light,
+    vec3 normal,
+    vec3 view,
+    PhongMaterialParameters material) {
+  vec3 reflected = -reflect(light.toLightDirection, normal);
+
+  float LdotN = dot(light.toLightDirection, normal);
+  float RdotV = max(dot(reflected, view), 0.0);
+
+  float diffuseFactor = max(LdotN, 0.0);
+  vec3 diffuse = material.diffuseFactor * (light.intensity * diffuseFactor);
+
+  float specularFactor = pow(RdotV, material.shininess) * step(0.0, LdotN); // do not light backface
+  vec3 specular = material.specularFactor * (light.intensity * specularFactor);
+
+  return material.occlusion * diffuse + specular;
+}
+
+// A material that uses Phong shading model.
+//
+// @param [default=0.0,min=0.0,max=100.0] smoothness
+void main(
+    optional<std::Texture2d> diffuseTexture,
+    optional<std::Texture2d> normalTexture,
+    optional<std::Texture2d> specularTexture,
+    float smoothness,
+    optional<std::Texture2d> emissiveTexture,
+    out vec4 Position,
+    out vec4 Color) {
+  float shininess = mix(1.0, 100.0, pow(smoothness * 0.01, 2.0)); // non-linear mapping from [0,100] to [1,100]
+
+  // Attributes
+  vec2 uv = std::getVertexTexCoord();
+  optional<vec3> sampledNormal = normalize(std::getTangentFrame() * normalTexture.sample(uv).xyz * 2.0 - 1.0);
+  vec3 localNormal = sampledNormal.valueOr(std::getVertexNormal());
+  vec4 localPosition = std::getVertexPosition();
+
+  // Material parameters
+  vec4 diffuseAndOpacity = diffuseTexture.sample(uv).valueOr(vec4(1.0));
+  vec4 specularAndShininess = specularTexture.sample(uv).valueOr(vec4(1.0));
+  PhongMaterialParameters material;
+  material.emission = emissiveTexture.sample(uv).rgb.valueOr(vec3(0.0));
+  material.ambientFactor = diffuseAndOpacity.rgb;
+  material.diffuseFactor = diffuseAndOpacity.rgb;
+  material.specularFactor = specularAndShininess.rgb;
+  material.shininess = clamp(specularAndShininess.a * shininess, 1.0, 100.0);
+  material.occlusion = 1.0;
+
+  // Screen-space position
+  Position = std::getModelViewProjectionMatrix() * localPosition;
+
+  // Camera-space normal, position, and view
+  vec3 csNormal = normalize(fragment(std::getNormalMatrix() * localNormal));
+  vec4 csPosition = fragment(std::getModelViewMatrix() * localPosition);
+  vec3 csView = normalize(-csPosition.xyz); // csCamera is at vec3(0,0,0)
+
+  // color
+  vec3 color = material.emission + material.ambientFactor * std::getAmbientLight().rgb;
+  if (std::getActiveLightCount() > 0) color += applyPhong(std::getLightData0(csPosition.xyz), csNormal, csView, material);
+  if (std::getActiveLightCount() > 1) color += applyPhong(std::getLightData1(csPosition.xyz), csNormal, csView, material);
+  if (std::getActiveLightCount() > 2) color += applyPhong(std::getLightData2(csPosition.xyz), csNormal, csView, material);
+  if (std::getActiveLightCount() > 3) color += applyPhong(std::getLightData3(csPosition.xyz), csNormal, csView, material);
+  Color = vec4(color, diffuseAndOpacity.a);
+}
