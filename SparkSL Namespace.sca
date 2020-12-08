@@ -1,0 +1,3 @@
+precision highp float; // set high precision so the shit works
+using namespace std; // set namespace to std, so that you don't have to write std:: before every uniform
+// eg vec2 uv = getVertexTexCoord(); instead of vec2 uv = std:: getVertexTexCoord();
