@@ -6,10 +6,6 @@
 // import with from main script via > const {Vector} = require('./Vector.js');
 // make a new vector with           > var myvector = new Vector(1,2,3);
 
-// ### Instance Methods
-// The methods `add()`, `subtract()`, `multiply()`, and `divide()` can all
-// take either a vector or a number as an argument.
-
 export class Vector {
   constructor(x, y, z) {
       this.x = x || 0;
@@ -17,6 +13,9 @@ export class Vector {
       this.z = z || 0;
   }
 
+  // ### Instance Methods
+  // The methods `add()`, `subtract()`, `multiply()`, and `divide()` can all
+  // take either a vector or a number as an argument.
   add(v) {
       if (v instanceof Vector) return new Vector(this.x + v.x, this.y + v.y, this.z + v.z);
       else return new Vector(this.x + v, this.y + v, this.z + v);
