@@ -3,7 +3,6 @@
  */
 
 const Scene = require('Scene');
-const R = require("Reactive");
 
 (async function () {  
   const parent = await Scene.root.findFirst("parent"); // The parent object of the object you want to rotate
