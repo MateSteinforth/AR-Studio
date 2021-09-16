@@ -4,7 +4,7 @@
 
 void main(optional<std::Texture2d> diffuseTexture, out vec4 Color) {
   vec4 pos = std::getModelViewProjectionMatrix() * std::getVertexPosition();
-  vec3 ndc = pos.xyz / pos.z;
+  vec3 ndc = pos.xyz / pos.w;
   vec2 screenspaceUV = ndc.xy * 0.5 + 0.5;
   screenspaceUV.y *= -1.;
   screenspaceUV.y += 1.;
